@@ -19,8 +19,7 @@ namespace CMPE1600_ICA5
             InitializeComponent();
             Text = "MiniEdit";
         }
-
-        private void UI_NewMenu_Click(object sender, EventArgs e)
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (textChange != true)
             {
@@ -29,9 +28,10 @@ namespace CMPE1600_ICA5
             }
             else
             {
-                MessageBox.Show("Would you like to save first?", "ICA 4", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);                
+                MessageBox.Show("Would you like to save first?", "MiniEdit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
             }
         }
+       
 
         private void UI_TextBox_TextChanged(object sender, EventArgs e)
         {
@@ -39,22 +39,66 @@ namespace CMPE1600_ICA5
             
         }
 
-        private void UI_SaveAsMenu_Click(object sender, EventArgs e)
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             StreamWriter swOutputFile;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-
+                    swOutputFile = new StreamWriter(saveFileDialog1.FileName);
+                    foreach(string n in UI_TextBox.Lines)
+                    {
+                        swOutputFile.WriteLine(n);
+                    }
+                    swOutputFile.Close();
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
-
-                    throw;
+                    MessageBox.Show(error.Message, "MiniEdit", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Asterisk);
                 }
+                Text = saveFileDialog1.FileName;
             }
+        }
 
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int sizeCounter = 0;
+            int index = 0;
+            string input = null;
+            StreamReader srInputFile;
+            List<string> middleMan = new List<string>();
+            string[] openArray;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Text = openFileDialog1.SafeFileName;
+                try
+                {
+                    srInputFile = new StreamReader(openFileDialog1.SafeFileName);
+                    while ((input = srInputFile.ReadLine()) != null)
+                    {
+                        middleMan.Add(input);
+                        sizeCounter++;
+                    }
+                    srInputFile.Close();
+                    openArray = new string[sizeCounter];
+
+                    for(index = 0; index < openArray.Length; index++)
+                    {
+                        openArray[index] = middleMan[index];
+                    }
+
+                    UI_TextBox.Lines = openArray;
+
+
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message, "ICA4", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+            }
         }
     }
 }
