@@ -32,17 +32,15 @@ namespace CMPE1600_ICA5
                 
                 if (result == DialogResult.Yes)
                 {
-
+                    SaveAs();
                 }
                 else if (result == DialogResult.No)
                 {
                     UI_TextBox.Clear();
                     Text = "Untitled.txt";
                 }
-                else if (result == DialogResult.Cancel)
-                {
 
-                }
+                textChange = false;
             }
         }
        
@@ -56,13 +54,44 @@ namespace CMPE1600_ICA5
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            SaveAs();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (textChange != true)
+            {
+                UI_TextBox.Clear();
+                Text = "Untitled.txt";
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("Would you like to save first?", "MiniEdit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                if (result == DialogResult.Yes)
+                {
+                    SaveAs();
+                }
+                else if (result == DialogResult.No)
+                {
+                    UI_TextBox.Clear();
+                    Text = "Untitled.txt";
+                }
+
+                textChange = false;
+            }
+            LoadFile();
+        }
+
+        private void SaveAs()
+        {
             StreamWriter swOutputFile;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     swOutputFile = new StreamWriter(saveFileDialog1.FileName);
-                    foreach(string n in UI_TextBox.Lines)
+                    foreach (string n in UI_TextBox.Lines)
                     {
                         swOutputFile.WriteLine(n);
                     }
@@ -75,13 +104,7 @@ namespace CMPE1600_ICA5
                 Text = saveFileDialog1.FileName;
             }
         }
-
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveAs();
-        }
-
-        private void SaveAs()
+        private void LoadFile()
         {
             int sizeCounter = 0;
             int index = 0;
@@ -116,6 +139,11 @@ namespace CMPE1600_ICA5
                 }
 
             }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
