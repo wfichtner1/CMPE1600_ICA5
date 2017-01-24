@@ -28,7 +28,21 @@ namespace CMPE1600_ICA5
             }
             else
             {
-                MessageBox.Show("Would you like to save first?", "MiniEdit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                DialogResult result = MessageBox.Show("Would you like to save first?", "MiniEdit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                
+                if (result == DialogResult.Yes)
+                {
+
+                }
+                else if (result == DialogResult.No)
+                {
+                    UI_TextBox.Clear();
+                    Text = "Untitled.txt";
+                }
+                else if (result == DialogResult.Cancel)
+                {
+
+                }
             }
         }
        
@@ -64,6 +78,11 @@ namespace CMPE1600_ICA5
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveAs();
+        }
+
+        private void SaveAs()
+        {
             int sizeCounter = 0;
             int index = 0;
             string input = null;
@@ -84,20 +103,18 @@ namespace CMPE1600_ICA5
                     srInputFile.Close();
                     openArray = new string[sizeCounter];
 
-                    for(index = 0; index < openArray.Length; index++)
+                    for (index = 0; index < openArray.Length; index++)
                     {
                         openArray[index] = middleMan[index];
                     }
 
                     UI_TextBox.Lines = openArray;
-
-
                 }
                 catch (Exception error)
                 {
                     MessageBox.Show(error.Message, "ICA4", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+
             }
         }
     }
