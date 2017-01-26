@@ -28,6 +28,7 @@ namespace CMPE1600_ICA5
             {
                 UI_TextBox.Clear();
                 Text = "Untitled.txt";
+                textChange = false;
             }
             else
             {
@@ -45,6 +46,7 @@ namespace CMPE1600_ICA5
 
                 textChange = false;
             }
+           
         }
 
         //Detects change in textbox and sets global variable to true
