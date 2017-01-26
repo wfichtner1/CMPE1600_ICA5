@@ -73,8 +73,7 @@ namespace CMPE1600_ICA5
         {
             if (textChange != true)
             {
-                UI_TextBox.Clear();
-                Text = "Untitled.txt";
+                LoadFile();                
             }
             else
             {
@@ -83,18 +82,15 @@ namespace CMPE1600_ICA5
                 if (result == DialogResult.Yes)
                 {
                     SaveAs();
+                    textChange = false;
                 }
                 else if (result == DialogResult.No)
                 {
                     UI_TextBox.Clear();
-                    Text = "Untitled.txt";
-                }
-
-                textChange = false;
+                    LoadFile();
+                    textChange = false;                 
+                }                
             }
-            LoadFile();
-            
-            textChange = false;
 
         }
 
