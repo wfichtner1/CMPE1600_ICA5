@@ -220,6 +220,10 @@ namespace CMPE1600_ICA5
                 {
                     textChange = false;                    
                 }
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
 
             }
         }
